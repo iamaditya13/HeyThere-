@@ -162,27 +162,6 @@ const ChatContainer = () => {
                 </div>
               );
             })}
-
-            {/* Typing Indicator */}
-            <div className="flex items-end gap-3">
-              <div className="w-10 h-10 rounded-full bg-gray-600 border-2 border-gray-500 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">
-                  {selectedUser.fullName?.charAt(0)}
-                </span>
-              </div>
-              <div className="bg-gray-600 rounded-2xl rounded-bl-md p-4 shadow-sm">
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
-                  </div>
-                  <span className="text-xs text-gray-300">
-                    {selectedUser.fullName} is typing...
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
         ) : (
           /* Empty state when no messages */
