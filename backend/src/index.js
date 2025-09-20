@@ -29,18 +29,15 @@ app.use("/api/messages", messageRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../Frontend/dist")));
-  app.get("/./*", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../Frontend/dist", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
     res.send("API is running....");
   });
 }
-
-app.get("/", (req, res) => {
-  res.json({ message: "Server is running!" });
-});
 
 server.listen(PORT, () => {
   console.log(`Server is running on PORT:${PORT}`);
