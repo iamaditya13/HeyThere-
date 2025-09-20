@@ -1,9 +1,10 @@
+import React from "react";
 import { X, Phone, Video, MoreVertical, Info } from "lucide-react";
 import useAuthStore from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
 
 const ChatHeader = () => {
-  const { selectedUser, setSelectedUser } = useChatStore();
+  const { selectedUser, setSelectedUser,  } = useChatStore();
   const { onlineUsers } = useAuthStore();
   const isOnline = onlineUsers.includes(selectedUser._id);
 
@@ -81,18 +82,6 @@ const ChatHeader = () => {
           </button>
         </div>
       </div>
-
-      
-       {isTyping && (
-        <div className="mt-3 flex items-center gap-2 text-xs text-gray-400">
-          <div className="flex gap-1">
-            <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
-            <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-100"></div>
-            <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-200"></div>
-          </div>
-          <span>{selectedUser.fullName} is typing...</span>
-        </div>
-      )} 
     </div>
   );
 };

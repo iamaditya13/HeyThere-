@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React,{ useRef, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Image, Send, X, Smile, Paperclip } from "lucide-react";
 import toast from "react-hot-toast";
@@ -67,7 +67,7 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="backdrop-blur-xl bg-white/5 border-t border-white/10 p-4">
+    <div className="backdrop-blur-xl bg-white/5 border-t border-white/10 p-4 flex-shrink-0">
       {/* Image Preview */}
       {imagePreview && (
         <div className="mb-4 flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10">

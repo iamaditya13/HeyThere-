@@ -35,13 +35,11 @@ const Sidebar = () => {
           <div className="p-2 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-lg">
             <Users className="w-5 h-5 text-white" />
           </div>
-          <span className="font-semibold text-white text-lg hidden lg:block">
-            Contacts
-          </span>
+          <span className="font-semibold text-white text-lg">Contacts</span>
         </div>
 
         {/* Search Bar */}
-        <div className="relative mb-4 hidden lg:block">
+        <div className="relative mb-4">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search className="w-4 h-4 text-gray-500" />
           </div>
@@ -55,7 +53,7 @@ const Sidebar = () => {
         </div>
 
         {/* Online Filter Toggle */}
-        <div className="hidden lg:flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <label className="flex items-center gap-3 cursor-pointer group">
             <div className="relative">
               <input
@@ -118,8 +116,8 @@ const Sidebar = () => {
               )}
             </div>
 
-            {/* User Info - Desktop */}
-            <div className="hidden lg:block flex-1 text-left min-w-0">
+            {/* User Info - Always visible */}
+            <div className="flex-1 text-left min-w-0 space-y-1">
               <div className="font-medium text-white truncate group-hover:text-purple-200 transition-colors">
                 {user.fullName}
               </div>
@@ -136,7 +134,7 @@ const Sidebar = () => {
 
             {/* Selection Indicator */}
             {selectedUser?._id === user._id && (
-              <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-indigo-500 rounded-full hidden lg:block"></div>
+              <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-indigo-500 rounded-full"></div>
             )}
           </button>
         ))}
@@ -161,7 +159,7 @@ const Sidebar = () => {
       <div className="p-4 border-t border-white/10 bg-gradient-to-r from-purple-900/20 to-indigo-900/20">
         <div className="flex items-center gap-2 text-sm text-gray-400">
           <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-          <span className="hidden lg:inline">You're online</span>
+          <span>You're online</span>
         </div>
       </div>
     </aside>

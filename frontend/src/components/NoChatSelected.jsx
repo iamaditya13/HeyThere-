@@ -1,9 +1,9 @@
 import React from "react";
-import { MessageSquare, Users, Zap } from "lucide-react";
+import { MessageSquare, Zap } from "lucide-react";
 
 const NoChatSelected = () => {
   return (
-    <div className="w-full flex flex-1 flex-col items-center justify-center p-16 backdrop-blur-xl bg-black/10 relative overflow-hidden">
+    <div className="h-full flex flex-col items-center justify-center p-16 backdrop-blur-xl bg-black/10 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -27,7 +27,7 @@ const NoChatSelected = () => {
         {/* Welcome Text */}
         <div className="space-y-4">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-            Welcome to HeyThere!
+            Welcome to WebChat!
           </h2>
           <p className="text-gray-400 text-lg leading-relaxed">
             Select a conversation from the sidebar to start chatting with your
