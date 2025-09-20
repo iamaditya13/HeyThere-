@@ -1,5 +1,5 @@
-import { useChatStore } from "../store/useChatStore";
 import React, { useEffect, useRef } from "react";
+import { useChatStore } from "../store/useChatStore";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
@@ -18,10 +18,17 @@ const ChatContainer = () => {
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
 
+  // Safety check - don't render if no selected user
+  if (!selectedUser || !selectedUser._id) {
+    return null;
+  }
+
   useEffect(() => {
-    getMessages(selectedUser._id);
-    subscribeToMessages();
-    return () => unsubscribeFromMessages();
+    if (selectedUser?._id) {
+      getMessages(selectedUser._id);
+      subscribeToMessages();
+      return () => unsubscribeFromMessages();
+    }
   }, [
     selectedUser._id,
     getMessages,
@@ -37,7 +44,7 @@ const ChatContainer = () => {
 
   if (isMessagesLoading) {
     return (
-      <div className="h-full flex flex-col backdrop-blur-xl bg-black/10 relative">
+      <div className="h-full flex flex-col bg-gray-700 relative">
         <ChatHeader />
         <div className="flex-1 min-h-0 overflow-hidden">
           <MessageSkeleton />
@@ -48,11 +55,11 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="h-full flex flex-col backdrop-blur-xl bg-black/10">
+    <div className="h-full flex flex-col bg-gray-700">
       <ChatHeader />
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-600 scrollbar-track-transparent">
+      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
         {messages.length > 0 ? (
           <div className="p-6 space-y-6">
             {messages.map((message, index) => {
@@ -64,13 +71,13 @@ const ChatContainer = () => {
               return (
                 <div
                   key={message._id}
-                  className={`flex items-end gap-3 animate-fadeIn ${
+                  className={`flex items-end gap-3 transition-all duration-300 ease-in-out ${
                     isOwn ? "flex-row-reverse" : "flex-row"
                   }`}
                 >
                   {/* Avatar */}
                   {showAvatar ? (
-                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20 shadow-lg flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-600 shadow-sm flex-shrink-0">
                       <img
                         src={
                           isOwn
@@ -94,7 +101,7 @@ const ChatContainer = () => {
                     {/* Time - only show for first message in group */}
                     {showAvatar && (
                       <div
-                        className={`text-xs text-gray-500 mb-1 px-1 ${
+                        className={`text-xs text-gray-400 mb-1 px-1 ${
                           isOwn ? "text-right" : "text-left"
                         }`}
                       >
@@ -104,11 +111,11 @@ const ChatContainer = () => {
 
                     <div
                       className={`
-                        relative p-4 rounded-2xl shadow-lg backdrop-blur-sm border
+                        relative p-4 rounded-2xl shadow-sm
                         ${
                           isOwn
-                            ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-purple-500/30"
-                            : "bg-white/10 text-white border-white/20"
+                            ? "bg-blue-500 text-white"
+                            : "bg-gray-600 text-white"
                         }
                         ${isOwn ? "rounded-br-md" : "rounded-bl-md"}
                       `}
@@ -119,7 +126,7 @@ const ChatContainer = () => {
                           <img
                             src={message.image}
                             alt="Shared image"
-                            className="max-w-[280px] rounded-xl shadow-lg border border-white/20"
+                            className="max-w-[280px] rounded-lg shadow-sm border border-gray-500"
                             loading="lazy"
                           />
                         </div>
@@ -135,7 +142,7 @@ const ChatContainer = () => {
                       {/* Message Status/Time for own messages */}
                       {isOwn && (
                         <div className="flex items-center justify-end mt-2 gap-1">
-                          <span className="text-xs text-purple-200 opacity-70">
+                          <span className="text-xs text-blue-200 opacity-70">
                             {new Date(message.createdAt).toLocaleTimeString(
                               [],
                               {
@@ -146,7 +153,7 @@ const ChatContainer = () => {
                           </span>
                           {/* Read status indicator */}
                           <div className="w-4 h-4 flex items-center justify-center">
-                            <div className="w-3 h-3 rounded-full bg-purple-200 opacity-60"></div>
+                            <div className="w-3 h-3 rounded-full bg-blue-200 opacity-60"></div>
                           </div>
                         </div>
                       )}
@@ -155,13 +162,34 @@ const ChatContainer = () => {
                 </div>
               );
             })}
+
+            {/* Typing Indicator */}
+            <div className="flex items-end gap-3">
+              <div className="w-10 h-10 rounded-full bg-gray-600 border-2 border-gray-500 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">
+                  {selectedUser.fullName?.charAt(0)}
+                </span>
+              </div>
+              <div className="bg-gray-600 rounded-2xl rounded-bl-md p-4 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
+                  </div>
+                  <span className="text-xs text-gray-300">
+                    {selectedUser.fullName} is typing...
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           /* Empty state when no messages */
           <div className="h-full flex flex-col items-center justify-center p-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-600/20 to-indigo-600/20 flex items-center justify-center mb-4 border border-white/10">
+            <div className="w-16 h-16 rounded-full bg-gray-600 flex items-center justify-center mb-4 border border-gray-500">
               <svg
-                className="w-8 h-8 text-purple-400"
+                className="w-8 h-8 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -186,9 +214,6 @@ const ChatContainer = () => {
         {/* Scroll anchor */}
         <div ref={messageEndRef} />
       </div>
-
-      {/* Gradient overlay at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
 
       <MessageInput />
     </div>

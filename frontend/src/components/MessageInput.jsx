@@ -1,4 +1,4 @@
-import React,{ useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Image, Send, X, Smile, Paperclip } from "lucide-react";
 import toast from "react-hot-toast";
@@ -67,19 +67,19 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="backdrop-blur-xl bg-white/5 border-t border-white/10 p-4 flex-shrink-0">
+    <div className="bg-gray-800 border-t border-gray-600 p-4 flex-shrink-0">
       {/* Image Preview */}
       {imagePreview && (
-        <div className="mb-4 flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10">
+        <div className="mb-4 flex items-start gap-3 p-3 bg-gray-700 rounded-lg border border-gray-600">
           <div className="relative">
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-white/20 shadow-lg"
+              className="w-20 h-20 object-cover rounded-lg border border-gray-500 shadow-sm"
             />
             <button
               onClick={removeImage}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors shadow-lg"
+              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors shadow-sm"
               type="button"
             >
               <X className="w-3 h-3 text-white" />
@@ -89,7 +89,7 @@ const MessageInput = () => {
             <p className="text-sm text-gray-300 font-medium">
               Image ready to send
             </p>
-            <p className="text-xs text-gray-500 mt-1">Click the X to remove</p>
+            <p className="text-xs text-gray-400 mt-1">Click the X to remove</p>
           </div>
         </div>
       )}
@@ -97,15 +97,15 @@ const MessageInput = () => {
       {/* Message Input Form */}
       <form onSubmit={handleSendMessage} className="flex items-end gap-3">
         {/* Main Input Container */}
-        <div className="flex-1 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-3 focus-within:border-purple-500/50 focus-within:ring-2 focus-within:ring-purple-500/20 transition-all">
+        <div className="flex-1 bg-gray-700 border border-gray-600 rounded-2xl p-3 focus-within:border-blue-500/50 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all">
           <div className="flex items-end gap-3">
             {/* Attachment Button */}
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className={`flex-shrink-0 p-2 rounded-xl transition-all hover:bg-white/10 ${
+              className={`flex-shrink-0 p-2 rounded-lg transition-all hover:bg-gray-600 ${
                 imagePreview
-                  ? "text-purple-400 bg-purple-400/20"
+                  ? "text-blue-400 bg-blue-400/20"
                   : "text-gray-400 hover:text-white"
               }`}
             >
@@ -115,8 +115,8 @@ const MessageInput = () => {
             {/* Text Input */}
             <textarea
               ref={textareaRef}
-              className="flex-1 bg-transparent text-white placeholder-gray-500 resize-none focus:outline-none text-sm leading-relaxed min-h-[24px] max-h-[120px] py-1"
-              placeholder="Type your message..."
+              className="flex-1 bg-transparent text-white placeholder-gray-400 resize-none focus:outline-none text-sm leading-relaxed min-h-[24px] max-h-[120px] py-1"
+              placeholder="This is a preview message"
               value={text}
               onChange={(e) => {
                 setText(e.target.value);
@@ -129,7 +129,7 @@ const MessageInput = () => {
             {/* Emoji Button */}
             <button
               type="button"
-              className="flex-shrink-0 p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+              className="flex-shrink-0 p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-600 transition-all"
             >
               <Smile className="w-5 h-5" />
             </button>
@@ -141,11 +141,11 @@ const MessageInput = () => {
           type="submit"
           disabled={!text.trim() && !imagePreview}
           className={`
-            p-3 rounded-2xl transition-all duration-200 shadow-lg
+            p-3 rounded-2xl transition-all duration-200 shadow-sm
             ${
               !text.trim() && !imagePreview
                 ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white transform hover:scale-105 hover:shadow-xl"
+                : "bg-blue-500 hover:bg-blue-600 text-white transform hover:scale-105 hover:shadow-md"
             }
           `}
         >
@@ -162,7 +162,7 @@ const MessageInput = () => {
         />
       </form>
 
-      {/* Quick Actions / Suggestions (Optional) */}
+      {/* Quick Actions / Suggestions */}
       <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
         <span>Press Enter to send, Shift + Enter for new line</span>
       </div>
